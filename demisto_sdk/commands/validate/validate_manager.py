@@ -275,6 +275,7 @@ class ValidateManager:
             bool. true if file is valid, false otherwise.
         """
         file_type = find_type(file_path)
+        print(f"File type {file_type}")
 
         if file_type in self.skipped_file_types:
             self.ignored_files.add(file_path)
@@ -296,9 +297,11 @@ class ValidateManager:
 
         click.secho(f'Validating scheme for {file_path}')
         if not structure_validator.is_valid_file():
+            print("NOT VALID! #1")
             return False
 
         elif self.check_only_schema:
+            print("check_only_schema -> True")
             return True
 
         if self.validate_in_id_set:
@@ -316,6 +319,8 @@ class ValidateManager:
                                                    is_modified)
 
         elif file_type == FileType.README:
+            print(20 * "#")
+            print("Entered validate_readme function")
             return self.validate_readme(file_path, pack_error_ignore_list)
 
         elif file_type == FileType.PLAYBOOK:
@@ -702,7 +707,7 @@ class ValidateManager:
                 error_message, error_code = Errors.missing_release_notes_for_pack(pack)
                 if not BaseValidator(ignored_errors=ignored_errors_list,
                                      print_as_warnings=self.print_ignored_errors).handle_error(
-                        error_message, error_code, file_path=os.path.join(PACKS_DIR, pack)):
+                    error_message, error_code, file_path=os.path.join(PACKS_DIR, pack)):
                     is_valid.add(True)
 
                 else:
