@@ -42,8 +42,11 @@ class ReadMeValidator(BaseValidator):
             return True
 
     def is_mdx_file(self) -> bool:
+        print("data inside is_mdx_file function:")
         html = self.is_html_doc()
+        print(f"Is html {html}")
         valid = self.are_modules_installed_for_verify()
+        print(f"Is valid modules {valid}")
         if valid and not html:
             mdx_parse = Path(__file__).parent.parent / 'mdx-parse.js'
             # add to env var the directory of node modules
